@@ -1,9 +1,8 @@
 import java.util.Random;
-
+//Neurale netwerk klasse
 public class NeuralNetwork {
     private int inputNodes = 4;
     private int hiddenNodes;
-    private int outputNodes = 1;
     private double[][] inputToHiddenWeights;
     private double[] hiddenToOutputWeights;
     private double[] hiddenOutputs;
@@ -12,7 +11,7 @@ public class NeuralNetwork {
         this.hiddenNodes = hiddenNodes;
         initializeWeights();
     }
-
+//Weights methode
     private void initializeWeights() {
         Random random = new Random();
         inputToHiddenWeights = new double[inputNodes][hiddenNodes];
@@ -26,7 +25,7 @@ public class NeuralNetwork {
             hiddenToOutputWeights[i] = random.nextDouble() - 0.5; 
         }
     }
-
+//Feedforward methode
     public double[] feedForward(double[] input) {
         hiddenOutputs = new double[hiddenNodes];
         for (int i = 0; i < hiddenNodes; i++) {
@@ -47,6 +46,7 @@ public class NeuralNetwork {
         return 1 / (1 + Math.exp(-x));
     }
 
+    //Mogelijke oplossingen een fitness score geven en dan steeds muteren
     public void trainGeneticAlgorithm(double[][] inputs, double[] targets, int populationSize, int generations) {
         NeuralNetwork[] population = new NeuralNetwork[populationSize];
         for (int i = 0; i < populationSize; i++) {
@@ -75,7 +75,7 @@ public class NeuralNetwork {
 
             population = newPopulation;
         }
-
+        //Beste fitness selecteren van alle gemuteerde oplosssingen
         double bestFitness = Double.MAX_VALUE;
         NeuralNetwork bestNetwork = null;
         for (NeuralNetwork network : population) {
@@ -125,6 +125,7 @@ public class NeuralNetwork {
         return child;
     }
 
+    //Methode om oplossing te muteren
     private void mutate(NeuralNetwork network) {
         Random random = new Random();
         for (int i = 0; i < network.inputToHiddenWeights.length; i++) {
@@ -146,7 +147,6 @@ public class NeuralNetwork {
 
     public static void main(String[] args) {
         int hiddenNodes = 3;
-        int epochs = 1000;
 
         NeuralNetwork neuralNetwork = new NeuralNetwork(hiddenNodes);
 
